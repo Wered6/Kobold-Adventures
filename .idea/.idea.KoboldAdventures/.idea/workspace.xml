@@ -12,9 +12,29 @@
   <component name="ChangeListManager">
     <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/ABP_Kobold.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AS_Kobold.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Attack1.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Attack2.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Attack3.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_AttackStrong.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Dash.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Hurt.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Jump.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Jump_Entry.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Jump_Exit.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Animations/Characters/AnimSequences/Kobold_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/BP_Kobold.uasset" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/PaperAssets/Characters/Kobold/TX_Kobol_Jump_Sprite_0.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PaperAssets/Characters/Kobold/TX_Kobol_Jump_Sprite_0.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/PaperAssets/Characters/Kobold/TX_Kobol_Jump_Sprite_1.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PaperAssets/Characters/Kobold/TX_Kobol_Jump_Sprite_1.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/PaperAssets/Characters/Kobold/TX_Kobol_Jump_Sprite_2.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PaperAssets/Characters/Kobold/TX_Kobol_Jump_Sprite_2.uasset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Content/PaperAssets/TM_HighForest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PaperAssets/TM_HighForest.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PaperAssets/TX_Background0_Sprite.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PaperAssets/TX_Background0_Sprite.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KoboldAdventures.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/KoboldAdventures.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/KoboldAdventures.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/KoboldAdventures.Build.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +96,9 @@
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
-    <setting file="cidr-memory-view://19" root0="SKIP_HIGHLIGHTING" />
+    <setting file="cidr-memory-view://23" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/KoboldAdventures/Characters/Kobold/KAKobold.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/KoboldAdventures/Characters/Kobold/KAKobold.h" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -528,7 +550,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1714733306092</updated>
-      <workItem from="1714733311495" duration="10336000" />
+      <workItem from="1714733311495" duration="14840000" />
     </task>
     <servers />
   </component>
