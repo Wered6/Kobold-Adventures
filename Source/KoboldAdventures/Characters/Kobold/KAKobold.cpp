@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "PaperZDAnimInstance.h"
 #include "AnimSequences/Players/PaperZDAnimPlayer.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 void AKAKobold::BeginPlay()
 {
@@ -124,7 +125,10 @@ void AKAKobold::UpdateControllerRotation(const float DirectionX) const
 
 void AKAKobold::OnStartJump()
 {
-	Jump();
+	if (!bIsAttacking)
+	{
+		Jump();
+	}
 }
 
 void AKAKobold::OnStopJump()
@@ -151,6 +155,12 @@ void AKAKobold::OnAttack()
 		return;
 	}
 #pragma endregion
+
+	const bool bIsInTheAir{!GetCharacterMovement()->IsMovingOnGround()};
+	if (bIsInTheAir)
+	{
+		return;
+	}
 
 	// If we're attacking and no attack is queued we can queue next attack
 	if (bIsAttacking && !bIsAttackQueued)
@@ -198,7 +208,7 @@ void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequen
 #pragma endregion
 
 	bIsAttacking = true;
-	
+
 	switch (CurrentAttack)
 	{
 	case EAttackType::ATTACK1:
