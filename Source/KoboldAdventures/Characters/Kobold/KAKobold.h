@@ -64,6 +64,9 @@ private:
 private:
 	void OnStartJump();
 	void OnStopJump();
+
+	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
+	TObjectPtr<UPaperZDAnimSequence> JumpEntryAnimSequence;
 #pragma endregion
 
 #pragma region Attack

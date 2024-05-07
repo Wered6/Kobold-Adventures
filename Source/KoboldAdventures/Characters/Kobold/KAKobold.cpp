@@ -125,8 +125,17 @@ void AKAKobold::UpdateControllerRotation(const float DirectionX) const
 
 void AKAKobold::OnStartJump()
 {
-	if (!bIsAttacking)
+#pragma region NullChecks
+	if (!JumpEntryAnimSequence)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnStartJump|JumpEntryAnimSequence is nullptr"))
+		return;
+	}
+#pragma endregion 
+	
+	if (!bIsAttacking && CanJump())
+	{
+		GetAnimInstance()->PlayAnimationOverride(JumpEntryAnimSequence, TEXT("DefaultSlot"), 0.4);
 		Jump();
 	}
 }
