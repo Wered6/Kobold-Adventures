@@ -5,6 +5,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "PaperZDAnimInstance.h"
+#include "AnimSequences/Players/PaperZDAnimPlayer.h"
 
 void AKAKobold::BeginPlay()
 {
@@ -25,7 +26,7 @@ void AKAKobold::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	UEnhancedInputComponent* EnhancedInputComponent{Cast<UEnhancedInputComponent>(PlayerInputComponent)};
 
-#pragma region EarlyReturn
+#pragma region NullChecks
 	if (!EnhancedInputComponent)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::SetupPlayerInputComponent|EnhancedInputComponent is nullptr"))
@@ -56,7 +57,7 @@ void AKAKobold::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void AKAKobold::SetupInputMappingContext() const
 {
-#pragma region EarlyReturn
+#pragma region NullChecks
 	if (!PC)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::SetupInputMappingContext|PC is nullptr"))
@@ -74,7 +75,7 @@ void AKAKobold::SetupInputMappingContext() const
 		LocalPlayer->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>()
 	};
 
-#pragma region EarlyReturn
+#pragma region NullChecks
 	if (!EnhancedInputLocalPlayerSubsystem)
 	{
 		UE_LOG(LogTemp, Warning,
@@ -99,7 +100,7 @@ void AKAKobold::OnMove(const FInputActionValue& Value)
 
 void AKAKobold::UpdateControllerRotation(const float DirectionX) const
 {
-#pragma region EarlyReturn
+#pragma region NullChecks
 	if (!PC)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::UpdateControllerRotation|PC is nullptr"))
@@ -133,7 +134,7 @@ void AKAKobold::OnStopJump()
 
 void AKAKobold::OnAttack()
 {
-#pragma region EarlyReturn
+#pragma region NullChecks
 	if (!Attack1AnimSequence)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnAttack|Attack1AnimSequence is nullptr"))
@@ -151,52 +152,44 @@ void AKAKobold::OnAttack()
 	}
 #pragma endregion
 
-	if (!bIsAttacking)
+	// If we're attacking and no attack is queued we can queue next attack
+	if (bIsAttacking && !bIsAttackQueued)
 	{
-		if (AttackComboTimerHandle.IsValid())
+		bIsAttackQueued = true;
+
+		// Queueing next attack on end of current attack animation
+		GetAnimInstance()->GetPlayer()->OnPlaybackSequenceComplete.AddDynamic(
+			this, &AKAKobold::OnPlaybackSequenceCompleted);
+	}
+	// If we're not attacking we have NextComboAttackWindowTime to do next attack combo
+	else if (!bIsAttacking)
+	{
+		// Clear timer, so it won't reset current attack
+		FTimerManager& TimerManager{GetWorld()->GetTimerManager()};
+		if (TimerManager.IsTimerActive(AttackComboTimerHandle))
 		{
-			// Clear timer earlier
-			AttackComboTimerHandle.Invalidate();
+			TimerManager.ClearTimer(AttackComboTimerHandle);
 		}
 
-		bIsAttacking = true;
-
+		// Play proper attack animation
 		switch (CurrentAttack)
 		{
-		case EAttackType::NONE:
-			{
-				// CurrentAttack can't be NONE
-				break;
-			}
 		case EAttackType::ATTACK1:
-			{
-				PlayAttackAnimation(Attack1AnimSequence, EAttackType::ATTACK2);
-				break;
-			}
+			PlayAttackAnimation(Attack1AnimSequence);
+			break;
 		case EAttackType::ATTACK2:
-			{
-				PlayAttackAnimation(Attack2AnimSequence, EAttackType::ATTACK3);
-				break;
-			}
+			PlayAttackAnimation(Attack2AnimSequence);
+			break;
 		case EAttackType::ATTACK3:
-			{
-				PlayAttackAnimation(Attack3AnimSequence, EAttackType::ATTACK1);
-				break;
-			}
+			PlayAttackAnimation(Attack3AnimSequence);
+			break;
 		}
-		GetWorld()->GetTimerManager().SetTimer(AttackComboTimerHandle, this, &AKAKobold::ResetNextAttack,
-		                                       AttackComboTime);
 	}
 }
 
-void AKAKobold::ResetNextAttack()
+void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence)
 {
-	CurrentAttack = EAttackType::ATTACK1;
-}
-
-void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence, EAttackType NextAttack)
-{
-#pragma region EarlyReturn
+#pragma region NullChecks
 	if (!AttackAnimSequence)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::PlayAttackAnimation|AttackAnimSequence is nullptr"))
@@ -204,12 +197,78 @@ void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequen
 	}
 #pragma endregion
 
+	bIsAttacking = true;
+	
+	switch (CurrentAttack)
+	{
+	case EAttackType::ATTACK1:
+		CurrentAttack = EAttackType::ATTACK2;
+		break;
+	case EAttackType::ATTACK2:
+		CurrentAttack = EAttackType::ATTACK3;
+		break;
+	case EAttackType::ATTACK3:
+		CurrentAttack = EAttackType::ATTACK1;
+		break;
+	}
+
+	// On end of animation set bIsAttacking flag to false
 	FZDOnAnimationOverrideEndSignature EndAnimDelegate;
-	EndAnimDelegate.BindLambda([this, NextAttack](bool bResult)
+	EndAnimDelegate.BindLambda([this](bool bResult)
 	{
 		// You can use bResult to differentiate between OnCompleted and OnCancelled
-		bIsAttacking = false;
-		CurrentAttack = NextAttack;
+		if (bResult)
+		{
+			bIsAttacking = false;
+		}
 	});
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1.f, 0.f, EndAnimDelegate);
+
+	// Set time window for attack combo
+	GetWorld()->GetTimerManager().SetTimer(AttackComboTimerHandle, this, &AKAKobold::ResetCurrentAttack,
+	                                       NextComboAttackWindowTime);
+}
+
+void AKAKobold::ResetCurrentAttack()
+{
+	CurrentAttack = EAttackType::ATTACK1;
+}
+
+void AKAKobold::OnPlaybackSequenceCompleted(const UPaperZDAnimSequence* AnimSequence)
+{
+#pragma region NullChecks
+	if (!AnimSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnPlaybackSequenceCompleted|AnimSequence is nullptr"))
+		return;
+	}
+	if (!Attack1AnimSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnPlaybackSequenceCompleted|Attack1AnimSequence is nullptr"))
+		return;
+	}
+	if (!Attack2AnimSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnPlaybackSequenceCompleted|Attack2AnimSequence is nullptr"))
+		return;
+	}
+	if (!Attack3AnimSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnPlaybackSequenceCompleted|Attack3AnimSequence is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	bIsAttackQueued = false;
+
+	if (AnimSequence == Attack1AnimSequence)
+	{
+		PlayAttackAnimation(Attack2AnimSequence);
+	}
+	else if (AnimSequence == Attack2AnimSequence)
+	{
+		PlayAttackAnimation(Attack3AnimSequence);
+	}
+
+	GetAnimInstance()->GetPlayer()->OnPlaybackSequenceComplete.RemoveAll(this);
 }

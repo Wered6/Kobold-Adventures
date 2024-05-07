@@ -14,10 +14,9 @@ class UPaperZDAnimSequence;
 UENUM()
 enum class EAttackType : uint8
 {
-	NONE UMETA(DisplayName="None"),
 	ATTACK1 UMETA(DisplayName="Attack1"),
 	ATTACK2 UMETA(DisplayName="Attack2"),
-	ATTACK3 UMETA(DisplayerName="Attack3")
+	ATTACK3 UMETA(DisplayName="Attack3")
 };
 
 UCLASS()
@@ -71,8 +70,11 @@ private:
 
 private:
 	void OnAttack();
-	void ResetNextAttack();
-	void PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence, EAttackType NextAttack);
+	void PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence);
+	void ResetCurrentAttack();
+
+	UFUNCTION()
+	void OnPlaybackSequenceCompleted(const UPaperZDAnimSequence* AnimSequence);
 
 	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
 	TObjectPtr<UPaperZDAnimSequence> Attack1AnimSequence;
@@ -84,10 +86,12 @@ private:
 	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
 	bool bIsAttacking{false};
 	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	bool bIsAttackQueued{false};
+	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
 	EAttackType CurrentAttack{EAttackType::ATTACK1};
 	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
 	FTimerHandle AttackComboTimerHandle;
 	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
-	float AttackComboTime{1.f};
+	float NextComboAttackWindowTime{1.f};
 #pragma endregion
 };
