@@ -6,7 +6,29 @@
 #include "EnhancedInputSubsystems.h"
 #include "PaperZDAnimInstance.h"
 #include "AnimSequences/Players/PaperZDAnimPlayer.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+
+AKAKobold::AKAKobold()
+{
+	Attack1HitBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Attack1HitBox"));
+	Attack1HitBox->SetRelativeLocation(FVector(88.f, 0.f, -14.f));
+	Attack1HitBox->SetBoxExtent(FVector(132.f, 32.f, 42.f));
+	Attack1HitBox->SetCollisionProfileName(TEXT("AttackBox"));
+	Attack1HitBox->SetupAttachment(RootComponent);
+
+	Attack2HitBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Attack2HitBox"));
+	Attack2HitBox->SetRelativeLocation(FVector(20.f, 0.f, -36.f));
+	Attack2HitBox->SetBoxExtent(FVector(176.f, 32.f, 48.f));
+	Attack2HitBox->SetCollisionProfileName(TEXT("AttackBox"));
+	Attack2HitBox->SetupAttachment(RootComponent);
+
+	Attack3HitBox = CreateDefaultSubobject<UBoxComponent>(TEXT("Attack3HitBox"));
+	Attack3HitBox->SetRelativeLocation(FVector(168.f, 0.f, 36.f));
+	Attack3HitBox->SetBoxExtent(FVector(64.f, 32.f, 144.f));
+	Attack3HitBox->SetCollisionProfileName(TEXT("AttackBox"));
+	Attack3HitBox->SetupAttachment(RootComponent);
+}
 
 void AKAKobold::BeginPlay()
 {
@@ -131,8 +153,8 @@ void AKAKobold::OnStartJump()
 		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::OnStartJump|JumpEntryAnimSequence is nullptr"))
 		return;
 	}
-#pragma endregion 
-	
+#pragma endregion
+
 	if (!bIsAttacking && CanJump())
 	{
 		GetAnimInstance()->PlayAnimationOverride(JumpEntryAnimSequence, TEXT("DefaultSlot"), 0.4);
@@ -143,6 +165,44 @@ void AKAKobold::OnStartJump()
 void AKAKobold::OnStopJump()
 {
 	StopJumping();
+}
+
+void AKAKobold::SetAttackHitBoxCollision(const EAttackType AttackType, const bool bSetActive) const
+{
+#pragma region NullChecks
+	if (!Attack1HitBox)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::SetAttackHitBoxCollision|Attack1HitBox is nullptr"))
+		return;
+	}
+	if (!Attack1HitBox)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::SetAttackHitBoxCollision|Attack1HitBox is nullptr"))
+		return;
+	}
+	if (!Attack1HitBox)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAKobold::SetAttackHitBoxCollision|Attack1HitBox is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	const ECollisionEnabled::Type CollisionState{
+		bSetActive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision
+	};
+
+	switch (AttackType)
+	{
+	case EAttackType::ATTACK1:
+		Attack1HitBox->SetCollisionEnabled(CollisionState);
+		break;
+	case EAttackType::ATTACK2:
+		Attack2HitBox->SetCollisionEnabled(CollisionState);
+		break;
+	case EAttackType::ATTACK3:
+		Attack3HitBox->SetCollisionEnabled(CollisionState);
+		break;
+	}
 }
 
 void AKAKobold::OnAttack()

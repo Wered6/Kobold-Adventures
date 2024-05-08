@@ -3,15 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PaperZDCharacter.h"
+#include "KoboldAdventures/Characters/KABaseChar.h"
 #include "KAKobold.generated.h"
 
+class UBoxComponent;
 struct FInputActionValue;
 class UInputMappingContext;
 class UInputAction;
 class UPaperZDAnimSequence;
 
-UENUM()
+UENUM(BlueprintType)
 enum class EAttackType : uint8
 {
 	ATTACK1 UMETA(DisplayName="Attack1"),
@@ -20,11 +21,13 @@ enum class EAttackType : uint8
 };
 
 UCLASS()
-class KOBOLDADVENTURES_API AKAKobold : public APaperZDCharacter
+class KOBOLDADVENTURES_API AKAKobold : public AKABaseChar
 {
 	GENERATED_BODY()
 
 public:
+	AKAKobold();
+
 	virtual void BeginPlay() override;
 
 private:
@@ -71,6 +74,10 @@ private:
 
 #pragma region Attack
 
+public:
+	UFUNCTION(BlueprintCallable, Category="KA|Attack")
+	void SetAttackHitBoxCollision(const EAttackType AttackType, const bool bSetActive) const;
+
 private:
 	void OnAttack();
 	void PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence);
@@ -85,6 +92,13 @@ private:
 	TObjectPtr<UPaperZDAnimSequence> Attack2AnimSequence;
 	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
 	TObjectPtr<UPaperZDAnimSequence> Attack3AnimSequence;
+
+	UPROPERTY(BlueprintReadOnly, Category="KA|Attack", meta=(AllowPrivateAccess=true))
+	TObjectPtr<UBoxComponent> Attack1HitBox;
+	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	TObjectPtr<UBoxComponent> Attack2HitBox;
+	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	TObjectPtr<UBoxComponent> Attack3HitBox;
 
 	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
 	bool bIsAttacking{false};
