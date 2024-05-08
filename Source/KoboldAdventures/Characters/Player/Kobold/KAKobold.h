@@ -67,15 +67,12 @@ private:
 private:
 	void OnStartJump();
 	void OnStopJump();
-
-	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
-	TObjectPtr<UPaperZDAnimSequence> JumpEntryAnimSequence;
 #pragma endregion
 
-#pragma region Attack
+#pragma region Combat
 
 public:
-	UFUNCTION(BlueprintCallable, Category="KA|Attack")
+	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void SetAttackHitBoxCollision(const EAttackType AttackType, const bool bSetActive) const;
 
 private:
@@ -86,29 +83,29 @@ private:
 	UFUNCTION()
 	void OnPlaybackSequenceCompleted(const UPaperZDAnimSequence* AnimSequence);
 
-	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
+	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> Attack1AnimSequence;
-	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
+	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> Attack2AnimSequence;
-	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
+	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> Attack3AnimSequence;
 
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBoxComponent> Attack1HitBox;
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBoxComponent> Attack2HitBox;
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBoxComponent> Attack3HitBox;
 
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	bool bIsAttacking{false};
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	bool bIsAttackQueued{false};
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	EAttackType CurrentAttack{EAttackType::ATTACK1};
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	FTimerHandle AttackComboTimerHandle;
-	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	float NextComboAttackWindowTime{1.f};
 #pragma endregion
 };
