@@ -93,7 +93,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category="KA|Attack")
 	TObjectPtr<UPaperZDAnimSequence> Attack3AnimSequence;
 
-	UPROPERTY(BlueprintReadOnly, Category="KA|Attack", meta=(AllowPrivateAccess=true))
+	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
 	TObjectPtr<UBoxComponent> Attack1HitBox;
 	UPROPERTY(VisibleAnywhere, Category="KA|Attack")
 	TObjectPtr<UBoxComponent> Attack2HitBox;
