@@ -10,14 +10,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Config/DefaultEngine.ini" beforeDir="false" afterPath="$PROJECT_DIR$/Config/DefaultEngine.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/ABP_Mushroom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/ABP_Mushroom.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/BP_Mushroom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/BP_Mushroom.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/PaperAssets/TM_HighForest.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/PaperAssets/TM_HighForest.uasset" afterDir="false" />
-    </list>
+    <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -486,7 +479,7 @@
       <workItem from="1714995348776" duration="2201000" />
       <workItem from="1714998481854" duration="17930000" />
       <workItem from="1715077947322" duration="5221000" />
-      <workItem from="1715179069849" duration="6890000" />
+      <workItem from="1715179069849" duration="6915000" />
     </task>
     <servers />
   </component>

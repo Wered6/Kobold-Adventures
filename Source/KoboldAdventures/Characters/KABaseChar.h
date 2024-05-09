@@ -12,6 +12,8 @@ class KOBOLDADVENTURES_API AKABaseChar : public APaperZDCharacter
 	GENERATED_BODY()
 
 public:
+	AKABaseChar();
+	
 	virtual void BeginPlay() override;
 
 #pragma region Combat
