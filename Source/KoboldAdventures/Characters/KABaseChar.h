@@ -6,6 +6,8 @@
 #include "PaperZDCharacter.h"
 #include "KABaseChar.generated.h"
 
+class UPaperZDAnimSequence;
+
 UCLASS()
 class KOBOLDADVENTURES_API AKABaseChar : public APaperZDCharacter
 {
@@ -13,7 +15,8 @@ class KOBOLDADVENTURES_API AKABaseChar : public APaperZDCharacter
 
 public:
 	AKABaseChar();
-	
+
+protected:
 	virtual void BeginPlay() override;
 
 #pragma region Combat
@@ -22,8 +25,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void ReceiveDamage(const float Damage);
 
-#pragma endregion 
-	
+	bool GetIsAttacking() const;
+
+protected:
+	UPROPERTY(BlueprintReadOnly, Category="KA|Combat")
+	bool bIsAttacking{false};
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
+	TObjectPtr<UPaperZDAnimSequence> HitAnimSequence;
+
+#pragma endregion
+
 #pragma region Health
 
 private:

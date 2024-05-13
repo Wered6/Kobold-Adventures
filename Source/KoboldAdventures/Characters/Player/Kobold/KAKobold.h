@@ -28,6 +28,7 @@ class KOBOLDADVENTURES_API AKAKobold : public AKABaseChar
 public:
 	AKAKobold();
 
+protected:
 	virtual void BeginPlay() override;
 
 private:
@@ -96,9 +97,7 @@ private:
 	TObjectPtr<UBoxComponent> Attack2HitBox;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBoxComponent> Attack3HitBox;
-
-	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
-	bool bIsAttacking{false};
+	
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	bool bIsAttackQueued{false};
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")

@@ -10,7 +10,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="" />
+    <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AI/AIC_Enemy.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AI/BB_Enemy.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/AI/BT_Enemy.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Kobold/ABP_Kobold.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Kobold/ABP_Kobold.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Kobold/BP_Kobold.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Kobold/BP_Kobold.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/ABP_Mushroom.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AS_Mushroom.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Attack.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Attack_WithStun.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Death.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Hit.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Idle.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Run.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/AnimSequences/Mushroom_Stun.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Mushroom/BP_Mushroom.uasset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Input/IMC_Platformer.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Input/IMC_Platformer.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KoboldAdventures.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/KoboldAdventures.sln.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KoboldAdventures.uproject" beforeDir="false" afterPath="$PROJECT_DIR$/KoboldAdventures.uproject" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/KoboldAdventures.Build.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/KoboldAdventures.Build.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,23 +45,29 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="cidr-memory-view://4" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Plugins/Marketplace/PaperZD/Source/PaperZD/Private/PaperZDAnimInstance.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/BTTask_2DMoveTo.cpp" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/BTTask_2DMoveTo.h" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../Program Files/Epic Games/UE_5.4/Engine/Plugins/Marketplace/PaperZD/Source/PaperZD/Private/PaperZDAnimInstance.cpp" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2fxCNbB9vM0Y7jdONqXaNfh6Ffq" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;C++ Project.KoboldAdventures.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -44,7 +75,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.updates&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -480,6 +511,10 @@
       <workItem from="1714998481854" duration="17930000" />
       <workItem from="1715077947322" duration="5221000" />
       <workItem from="1715179069849" duration="6915000" />
+      <workItem from="1715229427525" duration="8413000" />
+      <workItem from="1715322167348" duration="1070000" />
+      <workItem from="1715325185704" duration="8302000" />
+      <workItem from="1715338299690" duration="7766000" />
     </task>
     <servers />
   </component>

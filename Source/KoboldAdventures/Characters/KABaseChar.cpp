@@ -22,13 +22,26 @@ void AKABaseChar::BeginPlay()
 
 void AKABaseChar::ReceiveDamage(const float Damage)
 {
+#pragma region NullChecks
+	if (!HitAnimSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKABaseChar::ReceiveDamage|HitAnimSequence is nullptr"))
+		return;
+	}
+#pragma endregion
+
 	CurrentHealth -= Damage;
 
-	GetAnimInstance()->JumpToNode(TEXT("JumpHit"));
+	GetAnimInstance()->PlayAnimationOverride(HitAnimSequence);
 
 	if (CurrentHealth <= 0)
 	{
 		GetAnimInstance()->JumpToNode(TEXT("JumpDeath"));
 		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	}
+}
+
+bool AKABaseChar::GetIsAttacking() const
+{
+	return bIsAttacking;
 }
