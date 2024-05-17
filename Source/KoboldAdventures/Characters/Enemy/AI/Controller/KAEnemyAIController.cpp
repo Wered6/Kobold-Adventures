@@ -52,6 +52,16 @@ void AKAEnemyAIController::SetBTNode(UBTNode* NewBTNode)
 	BTNode = NewBTNode;
 }
 
+void AKAEnemyAIController::SetHasFocus(const bool bValue)
+{
+	bHasFocus = bValue;
+}
+
+bool AKAEnemyAIController::GetHasFocus() const
+{
+	return bHasFocus;
+}
+
 void AKAEnemyAIController::SetFocusDirection(AActor* AttackTarget, AKAEnemy* Enemy)
 {
 #pragma region NullChecks
@@ -66,18 +76,22 @@ void AKAEnemyAIController::SetFocusDirection(AActor* AttackTarget, AKAEnemy* Ene
 		return;
 	}
 #pragma endregion
-
+	
 	if (Enemy->GetIsAttacking())
 	{
 		return;
 	}
-	const FVector AttackTargetLocation{AttackTarget->GetActorLocation()};
-	const FVector EnemyLocation{Enemy->GetActorLocation()};
 
-	const FRotator LookAtRotation{UKismetMathLibrary::FindLookAtRotation(EnemyLocation, AttackTargetLocation)};
-	const FVector LookAtRotationVector{LookAtRotation.Vector()};
+	if (bHasFocus)
+	{
+		const FVector AttackTargetLocation{AttackTarget->GetActorLocation()};
+		const FVector EnemyLocation{Enemy->GetActorLocation()};
 
-	const FVector FocalPoint{EnemyLocation + FVector(LookAtRotationVector.X, 0.f, 0.f)};
+		const FRotator LookAtRotation{UKismetMathLibrary::FindLookAtRotation(EnemyLocation, AttackTargetLocation)};
+		const FVector LookAtRotationVector{LookAtRotation.Vector()};
 
-	SetFocalPoint(FocalPoint);
+		const FVector FocalPoint{EnemyLocation + FVector(LookAtRotationVector.X, 0.f, 0.f)};
+
+		SetFocalPoint(FocalPoint);
+	}
 }

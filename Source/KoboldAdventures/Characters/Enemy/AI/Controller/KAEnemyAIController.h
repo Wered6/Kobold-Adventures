@@ -34,7 +34,18 @@ private:
 
 #pragma endregion
 
+#pragma region Focus
+
+public:
+	void SetHasFocus(const bool bValue);
+	bool GetHasFocus() const;
+
 private:
 	UFUNCTION(BlueprintCallable, Category="KA")
 	void SetFocusDirection(AActor* AttackTarget, AKAEnemy* Enemy);
+
+	UPROPERTY(VisibleAnywhere, Category="KA")
+	bool bHasFocus{false};
+
+#pragma endregion
 };
