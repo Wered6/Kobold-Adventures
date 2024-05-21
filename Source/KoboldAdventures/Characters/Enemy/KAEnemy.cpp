@@ -27,3 +27,16 @@ void AKAEnemy::Attack()
 
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
 }
+
+AKAPatrolRoute* AKAEnemy::GetPatrolRoute_Implementation()
+{
+#pragma region NullChecks
+	if (!PatrolRoute)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::GetPatrolRoute_Implementation|PatrolRoute is nullptr"))
+		return nullptr;
+	}
+#pragma endregion
+
+	return PatrolRoute;
+}

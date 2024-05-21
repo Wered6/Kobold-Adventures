@@ -27,29 +27,46 @@ void AKAEnemyAIController::OnPossess(APawn* InPawn)
 void AKAEnemyAIController::OnAttackEndReceived()
 {
 #pragma region NullChecks
-	if (!BTComponent)
+	if (!DefaultAttackBTComponent)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnAttackEndReceived|BTComponent is nullptr"))
 		return;
 	}
-	if (!BTNode)
+	if (!DefaultAttackBTNode)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnAttackEndReceived|BTNode is nullptr"))
 		return;
 	}
 #pragma endregion
 
-	BTComponent->OnTaskFinished(static_cast<const UBTTaskNode*>(BTNode), EBTNodeResult::Succeeded);
+	DefaultAttackBTComponent->OnTaskFinished(static_cast<const UBTTaskNode*>(DefaultAttackBTNode),
+	                                         EBTNodeResult::Succeeded);
 }
 
-void AKAEnemyAIController::SetBTComponent(UBehaviorTreeComponent* NewBTComponent)
+void AKAEnemyAIController::SetDefaultAttackBTComponent(UBehaviorTreeComponent* NewBTComponent)
 {
-	BTComponent = NewBTComponent;
+#pragma region NullChecks
+	if (!NewBTComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetDefaultAttackBTComponent|NewBTComponent is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	DefaultAttackBTComponent = NewBTComponent;
 }
 
-void AKAEnemyAIController::SetBTNode(UBTNode* NewBTNode)
+void AKAEnemyAIController::SetDefaultAttackBTNode(UBTNode* NewBTNode)
 {
-	BTNode = NewBTNode;
+#pragma region NullChecks
+	if (!NewBTNode)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetDefaultAttackBTNode|NewBTNode is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	DefaultAttackBTNode = NewBTNode;
 }
 
 void AKAEnemyAIController::SetHasFocus(const bool bValue)
@@ -76,7 +93,7 @@ void AKAEnemyAIController::SetFocusDirection(AActor* AttackTarget, AKAEnemy* Ene
 		return;
 	}
 #pragma endregion
-	
+
 	if (Enemy->GetIsAttacking())
 	{
 		return;

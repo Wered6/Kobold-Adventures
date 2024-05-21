@@ -23,14 +23,14 @@ protected:
 public:
 	UFUNCTION()
 	void OnAttackEndReceived();
-	void SetBTComponent(UBehaviorTreeComponent* NewBTComponent);
-	void SetBTNode(UBTNode* NewBTNode);
+	void SetDefaultAttackBTComponent(UBehaviorTreeComponent* NewBTComponent);
+	void SetDefaultAttackBTNode(UBTNode* NewBTNode);
 
 private:
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
-	TObjectPtr<UBehaviorTreeComponent> BTComponent;
+	TObjectPtr<UBehaviorTreeComponent> DefaultAttackBTComponent;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
-	TObjectPtr<UBTNode> BTNode;
+	TObjectPtr<UBTNode> DefaultAttackBTNode;
 
 #pragma endregion
 
