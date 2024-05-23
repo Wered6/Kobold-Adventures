@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "EnemyAIInterface.generated.h"
+#include "KAEnemyAIInterface.generated.h"
 
 class AKAPatrolRoute;
 
 UINTERFACE()
-class UEnemyAIInterface : public UInterface
+class UKAEnemyAIInterface : public UInterface
 {
 	GENERATED_BODY()
 };
 
-class KOBOLDADVENTURES_API IEnemyAIInterface
+class KOBOLDADVENTURES_API IKAEnemyAIInterface
 {
 	GENERATED_BODY()
 

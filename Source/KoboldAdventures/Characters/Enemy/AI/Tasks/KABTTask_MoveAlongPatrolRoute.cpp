@@ -3,7 +3,7 @@
 
 #include "KABTTask_MoveAlongPatrolRoute.h"
 #include "AIController.h"
-#include "KoboldAdventures/Characters/Enemy/AI/EnemyAIInterface.h"
+#include "KoboldAdventures/Characters/Enemy/AI/KAEnemyAIInterface.h"
 #include "KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.h"
 #include "Navigation/PathFollowingComponent.h"
 
@@ -29,10 +29,10 @@ EBTNodeResult::Type UKABTTask_MoveAlongPatrolRoute::ExecuteTask(UBehaviorTreeCom
 	}
 #pragma endregion
 
-	const bool bImplementsInterface{AIPawn->Implements<UEnemyAIInterface>()};
+	const bool bImplementsInterface{AIPawn->Implements<UKAEnemyAIInterface>()};
 	if (bImplementsInterface)
 	{
-		PatrolRoute = IEnemyAIInterface::Execute_GetPatrolRoute(AIPawn);
+		PatrolRoute = IKAEnemyAIInterface::Execute_GetPatrolRoute(AIPawn);
 	}
 
 #pragma region NullChecks

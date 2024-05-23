@@ -3,7 +3,7 @@
 
 #include "KABTDecorator_HasPatrolRoute.h"
 #include "AIController.h"
-#include "KoboldAdventures/Characters/Enemy/AI/EnemyAIInterface.h"
+#include "KoboldAdventures/Characters/Enemy/AI/KAEnemyAIInterface.h"
 #include "KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.h"
 
 bool UKABTDecorator_HasPatrolRoute::CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp,
@@ -30,10 +30,10 @@ bool UKABTDecorator_HasPatrolRoute::CalculateRawConditionValue(UBehaviorTreeComp
 #pragma endregion
 
 	bool bHasPatrolRoute{false};
-	const bool bImplementsInterface{AIPawn->Implements<UEnemyAIInterface>()};
+	const bool bImplementsInterface{AIPawn->Implements<UKAEnemyAIInterface>()};
 	if (bImplementsInterface)
 	{
-		const AKAPatrolRoute* PatrolRoute{IEnemyAIInterface::Execute_GetPatrolRoute(AIPawn)};
+		const AKAPatrolRoute* PatrolRoute{IKAEnemyAIInterface::Execute_GetPatrolRoute(AIPawn)};
 		bHasPatrolRoute = IsValid(PatrolRoute);
 	}
 

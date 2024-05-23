@@ -10,7 +10,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="" />
+    <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/AI/BB_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/AI/BB_Enemy_Base.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/BP_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/BP_Enemy_Base.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KoboldAdventures.sln.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/KoboldAdventures.sln.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Decorators/KABTDecorator_HasPatrolRoute.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Decorators/KABTDecorator_HasPatrolRoute.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/EnemyAIInterface.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/KAEnemyAIInterface.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/EnemyAIInterface.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/KAEnemyAIInterface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_MoveAlongPatrolRoute.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_MoveAlongPatrolRoute.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +30,10 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
@@ -504,6 +518,9 @@
       <workItem from="1715338299690" duration="7766000" />
       <workItem from="1715598099486" duration="62200000" />
       <workItem from="1716214724599" duration="9930000" />
+      <workItem from="1716303021439" duration="13816000" />
+      <workItem from="1716374298165" duration="19000" />
+      <workItem from="1716448011023" duration="3135000" />
     </task>
     <servers />
   </component>
