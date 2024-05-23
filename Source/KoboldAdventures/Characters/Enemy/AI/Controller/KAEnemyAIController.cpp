@@ -72,6 +72,7 @@ void AKAEnemyAIController::SetDefaultAttackBTNode(UBTNode* NewBTNode)
 void AKAEnemyAIController::SetHasFocus(const bool bValue)
 {
 	bHasFocus = bValue;
+	ClearFocus(EAIFocusPriority::Gameplay);
 }
 
 bool AKAEnemyAIController::GetHasFocus() const
@@ -94,7 +95,8 @@ void AKAEnemyAIController::SetFocusDirection(AActor* AttackTarget, AKAEnemy* Ene
 	}
 #pragma endregion
 
-	if (Enemy->GetIsAttacking())
+	const bool bIsAttacking{Enemy->GetIsAttacking()};
+	if (bIsAttacking)
 	{
 		return;
 	}
