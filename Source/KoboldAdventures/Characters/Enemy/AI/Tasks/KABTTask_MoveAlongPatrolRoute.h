@@ -18,13 +18,16 @@ class KOBOLDADVENTURES_API UKABTTask_MoveAlongPatrolRoute : public UBTTask_Black
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
+protected:
+	virtual EBTNodeResult::Type AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
 private:
 	UFUNCTION()
 	void OnMoveCompleted(FAIRequestID RequestID, const EPathFollowingResult::Type Result);
 
 	UPROPERTY(VisibleAnywhere, Category="KA")
 	TObjectPtr<AKAPatrolRoute> PatrolRoute;
-	UPROPERTY(VisibleAnywhere, Category=KA)
+	UPROPERTY(VisibleAnywhere, Category="KA")
 	TObjectPtr<UBehaviorTreeComponent> BTComponent;
 
 	UPROPERTY()

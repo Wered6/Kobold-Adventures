@@ -44,7 +44,7 @@ EBTNodeResult::Type UKABTTask_MoveAlongPatrolRoute::ExecuteTask(UBehaviorTreeCom
 #pragma endregion
 
 	const FVector Destination{PatrolRoute->GetSplinePointAsWorldPosition()};
-	
+
 	FAIMoveRequest MoveRequest;
 	MoveRequest.SetGoalLocation(Destination);
 	MoveRequest.SetAcceptanceRadius(10.f);
@@ -56,6 +56,21 @@ EBTNodeResult::Type UKABTTask_MoveAlongPatrolRoute::ExecuteTask(UBehaviorTreeCom
 	BTComponent = &OwnerComp;
 
 	return EBTNodeResult::InProgress;
+}
+
+EBTNodeResult::Type UKABTTask_MoveAlongPatrolRoute::AbortTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+{
+#pragma region NullChecks
+	if (!AIC)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("UKABTTask_MoveAlongPatrolRoute::AbortTask|AIC is nullptr"))
+		return EBTNodeResult::Failed;
+	}
+#pragma endregion
+	
+	AIC->StopMovement();
+
+	return EBTNodeResult::Aborted;
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
