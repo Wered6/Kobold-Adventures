@@ -30,13 +30,5 @@ void AKAEnemy::Attack()
 
 AKAPatrolRoute* AKAEnemy::GetPatrolRoute_Implementation()
 {
-#pragma region NullChecks
-	if (!PatrolRoute)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::GetPatrolRoute_Implementation|PatrolRoute is nullptr"))
-		return nullptr;
-	}
-#pragma endregion
-
 	return PatrolRoute;
 }
