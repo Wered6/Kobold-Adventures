@@ -15,6 +15,7 @@ enum class EKAAIState : uint8
 	Passive,
 	Attacking,
 	Frozen,
+	Investigating,
 	Dead
 };
 
