@@ -8,4 +8,5 @@
 	<s:String x:Key="/Default/CodeStyle/Naming/CppNaming/Abbreviations/=KAAIC/@EntryIndexedValue">KAAIC</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CppNaming/Abbreviations/=KABT/@EntryIndexedValue">KABT</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CppNaming/Abbreviations/=NONE/@EntryIndexedValue">NONE</s:String>
+	<s:String x:Key="/Default/CodeStyle/Naming/CppNaming/Abbreviations/=OUT/@EntryIndexedValue">OUT</s:String>
 	<s:String x:Key="/Default/CodeStyle/Naming/CppNaming/Abbreviations/=ZD/@EntryIndexedValue">ZD</s:String></wpf:ResourceDictionary>

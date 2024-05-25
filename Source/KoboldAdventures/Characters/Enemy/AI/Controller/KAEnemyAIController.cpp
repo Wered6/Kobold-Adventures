@@ -3,8 +3,43 @@
 
 #include "KAEnemyAIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "KoboldAdventures/Characters/Enemy/KAEnemy.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
+
+AKAEnemyAIController::AKAEnemyAIController()
+{
+	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
+	SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("SightConfig"));
+
+#pragma region NullChecks
+	if (!AIPerception)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::AKAEnemyAIController|AIPerception is nullptr"))
+		return;
+	}
+	if (!SightConfig)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::AKAEnemyAIController|SightConfig is nullptr"))
+		return;
+	}
+#pragma endregion
+	
+	SightConfig->SightRadius = 800.f;
+	SightConfig->LoseSightRadius = 1200.f;
+	SightConfig->PeripheralVisionAngleDegrees = 5.f;
+	SightConfig->DetectionByAffiliation.bDetectEnemies = true;
+	SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
+	SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
+	SightConfig->SetMaxAge(5.f);
+
+	AIPerception->ConfigureSense(*SightConfig);
+	AIPerception->SetDominantSense(SightConfig->GetSenseImplementation());
+
+	AIPerception->OnPerceptionUpdated.AddDynamic(this, &AKAEnemyAIController::OnPerceptionUpdated);
+}
 
 void AKAEnemyAIController::OnPossess(APawn* InPawn)
 {
@@ -112,5 +147,93 @@ void AKAEnemyAIController::SetFocusDirection(AActor* AttackTarget, AKAEnemy* Ene
 		const FVector FocalPoint{EnemyLocation + FVector(LookAtRotationVector.X, 0.f, 0.f)};
 
 		SetFocalPoint(FocalPoint);
+	}
+}
+
+bool AKAEnemyAIController::CanSenseActor(AActor* Actor, const EKAAISense Sense, FAIStimulus& StimulusOUT) const
+{
+#pragma region NullChecks
+	if (!Actor)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::CanSaveActor|Actor is nullptr"))
+		return false;
+	}
+#pragma endregion
+
+	FActorPerceptionBlueprintInfo ActorPerceptionBlueprintInfo;
+	AIPerception->GetActorsPerception(Actor, ActorPerceptionBlueprintInfo);
+
+	TArray StimulusArray{ActorPerceptionBlueprintInfo.LastSensedStimuli};
+	for (FAIStimulus Stimulus : StimulusArray)
+	{
+		const TSubclassOf SenseClass{UAIPerceptionSystem::GetSenseClassForStimulus(GetWorld(), Stimulus)};
+		switch (Sense)
+		{
+		case EKAAISense::None:
+			break;
+		case EKAAISense::Sight:
+			{
+				if (SenseClass->IsChildOf(UAISense_Sight::StaticClass()))
+				{
+					StimulusOUT = Stimulus;
+					return Stimulus.WasSuccessfullySensed();
+				}
+				break;
+			}
+		}
+	}
+	return false;
+}
+
+void AKAEnemyAIController::HandleSensedSight(AActor* Actor)
+{
+#pragma region NullChecks
+	if (!Actor)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::HandleSensedSight|Actor is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	const EKAAIState State{GetCurrentState()};
+	const AActor* Player{UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)};
+
+	switch (State)
+	{
+	case EKAAIState::Passive:
+		{
+			if (Player == Actor)
+			{
+				SetStateAsAttacking(Actor);
+			}
+			break;
+		}
+	case EKAAIState::Attacking:
+		break;
+	case EKAAIState::Frozen:
+		break;
+	case EKAAIState::Investigating:
+		{
+			if (Player == Actor)
+			{
+				SetStateAsAttacking(Actor);
+			}
+			break;
+		}
+	case EKAAIState::Dead:
+		break;
+	}
+}
+
+void AKAEnemyAIController::OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors)
+{
+	for (AActor* Actor : UpdatedActors)
+	{
+		FAIStimulus Stimulus;
+		const bool bCanSenseActor{CanSenseActor(Actor, EKAAISense::Sight, Stimulus)};
+		if (bCanSenseActor)
+		{
+			HandleSensedSight(Actor);
+		}
 	}
 }
