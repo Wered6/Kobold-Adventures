@@ -11,5 +11,6 @@ class KOBOLDADVENTURES_API UKABTDecorator_HasPatrolRoute : public UBTDecorator_B
 {
 	GENERATED_BODY()
 
+public:
 	virtual bool CalculateRawConditionValue(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) const override;
 };

@@ -64,7 +64,7 @@ private:
 
 #pragma region State
 
-protected:
+public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
 	void SetStateAsAttacking(AActor* AttackTarget);
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
