@@ -26,7 +26,7 @@ AKAEnemyAIController::AKAEnemyAIController()
 		return;
 	}
 #pragma endregion
-	
+
 	SightConfig->SightRadius = 800.f;
 	SightConfig->LoseSightRadius = 1200.f;
 	SightConfig->PeripheralVisionAngleDegrees = 5.f;
@@ -212,14 +212,6 @@ void AKAEnemyAIController::HandleSensedSight(AActor* Actor)
 		break;
 	case EKAAIState::Frozen:
 		break;
-	case EKAAIState::Investigating:
-		{
-			if (Player == Actor)
-			{
-				SetStateAsAttacking(Actor);
-			}
-			break;
-		}
 	case EKAAIState::Dead:
 		break;
 	}
