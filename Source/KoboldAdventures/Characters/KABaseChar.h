@@ -28,6 +28,8 @@ public:
 	bool GetIsAttacking() const;
 
 protected:
+	virtual void HandleDeath() const;
+
 	UPROPERTY(BlueprintReadOnly, Category="KA|Combat")
 	bool bIsAttacking{false};
 

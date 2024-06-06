@@ -3,6 +3,7 @@
 
 #include "KAEnemy.h"
 #include "PaperZDAnimInstance.h"
+#include "AI/Controller/KAEnemyAIController.h"
 
 void AKAEnemy::Attack()
 {
@@ -26,6 +27,24 @@ void AKAEnemy::Attack()
 	});
 
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
+}
+
+void AKAEnemy::HandleDeath() const
+{
+	Super::HandleDeath();
+
+	AKAEnemyAIController* KAEnemyAIC{Cast<AKAEnemyAIController>(GetController())};
+
+#pragma region NullChecks
+	if (!KAEnemyAIC)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::HandleDeath|KAEnemyAIC is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	KAEnemyAIC->SetStateAsDead();
+	KAEnemyAIC->SetHasFocus(false);
 }
 
 AKAPatrolRoute* AKAEnemy::GetPatrolRoute_Implementation()

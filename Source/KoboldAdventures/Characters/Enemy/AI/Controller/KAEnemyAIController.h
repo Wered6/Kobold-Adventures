@@ -66,9 +66,13 @@ private:
 
 public:
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
+	void SetStateAsPassive();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
 	void SetStateAsAttacking(AActor* AttackTarget);
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
-	void SetStateAsPassive();
+	void SetStateAsStunned();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
+	void SetStateAsDead();
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
 	UPARAM(DisplayName="State")
 	EKAAIState GetCurrentState();

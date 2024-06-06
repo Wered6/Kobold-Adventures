@@ -14,7 +14,7 @@ enum class EKAAIState : uint8
 {
 	Passive,
 	Attacking,
-	Frozen,
+	Stunned,
 	Dead
 };
 
@@ -34,6 +34,8 @@ public:
 	FOnAttackEnd OnAttackEnd;
 
 private:
+	virtual void HandleDeath() const override;
+	
 	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> AttackAnimSequence;
 

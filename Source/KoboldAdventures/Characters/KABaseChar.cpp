@@ -36,12 +36,17 @@ void AKABaseChar::ReceiveDamage(const float Damage)
 
 	if (CurrentHealth <= 0)
 	{
-		GetAnimInstance()->JumpToNode(TEXT("JumpDeath"));
-		GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		HandleDeath();
 	}
 }
 
 bool AKABaseChar::GetIsAttacking() const
 {
 	return bIsAttacking;
+}
+
+void AKABaseChar::HandleDeath() const
+{
+	GetAnimInstance()->JumpToNode(TEXT("JumpDeath"));
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }

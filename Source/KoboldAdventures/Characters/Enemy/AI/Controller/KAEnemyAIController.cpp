@@ -210,7 +210,7 @@ void AKAEnemyAIController::HandleSensedSight(AActor* Actor)
 		}
 	case EKAAIState::Attacking:
 		break;
-	case EKAAIState::Frozen:
+	case EKAAIState::Stunned:
 		break;
 	case EKAAIState::Dead:
 		break;
