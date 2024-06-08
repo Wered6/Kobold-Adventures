@@ -4,6 +4,16 @@
 #include "KAEnemy.h"
 #include "PaperZDAnimInstance.h"
 #include "AI/Controller/KAEnemyAIController.h"
+#include "Components/BoxComponent.h"
+
+AKAEnemy::AKAEnemy()
+{
+	AttackHitBox = CreateDefaultSubobject<UBoxComponent>(TEXT("AttackHitBox"));
+	AttackHitBox->SetCollisionProfileName(TEXT("AttackBox"));
+	AttackHitBox->SetupAttachment(RootComponent);
+	// todo consider if attackhitboxes should be in cpp or in bleuprints
+	// todo rethink structure of player and enemy classes cpp or blueprints?
+}
 
 void AKAEnemy::Attack()
 {
@@ -27,6 +37,23 @@ void AKAEnemy::Attack()
 	});
 
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
+}
+
+void AKAEnemy::SetAttackHitBoxCollision(const bool bSetActive)
+{
+#pragma region NullChecks
+	if (!AttackHitBox)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::SetAttackHitBoxCollision|AttackHitBox is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	const ECollisionEnabled::Type CollisionState{
+		bSetActive ? ECollisionEnabled::QueryOnly : ECollisionEnabled::NoCollision
+	};
+
+	AttackHitBox->SetCollisionEnabled(CollisionState);
 }
 
 void AKAEnemy::HandleDeath() const

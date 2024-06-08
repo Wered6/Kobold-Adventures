@@ -7,6 +7,7 @@
 #include "KoboldAdventures/Characters/KABaseChar.h"
 #include "KAEnemy.generated.h"
 
+class UBoxComponent;
 class AKAPatrolRoute;
 
 UENUM(BlueprintType)
@@ -25,19 +26,32 @@ class KOBOLDADVENTURES_API AKAEnemy : public AKABaseChar, public IKAEnemyAIInter
 {
 	GENERATED_BODY()
 
+public:
+	AKAEnemy();
+
 #pragma region Combat
 
 public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void Attack();
+	UFUNCTION(BlueprintCallable, Category="KA|Combat")
+	void SetAttackHitBoxCollision(const bool bSetActive);
 
 	FOnAttackEnd OnAttackEnd;
 
 private:
 	virtual void HandleDeath() const override;
-	
+
 	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> AttackAnimSequence;
+
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
+	TObjectPtr<UBoxComponent> AttackHitBox;
+
+	/*
+	 *todo when entering in combat mode it stops for a second, fix it to be smooth (or not, think about it)
+	 *maybe add some bubble text of exclamation mark or something
+	*/
 
 #pragma endregion
 
