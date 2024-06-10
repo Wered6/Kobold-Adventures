@@ -32,6 +32,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category="KA|Combat")
 	bool bIsAttacking{false};
+	// todo change it to enum
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")

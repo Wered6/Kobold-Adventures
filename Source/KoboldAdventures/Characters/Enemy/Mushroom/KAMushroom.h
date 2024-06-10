@@ -10,4 +10,12 @@ UCLASS()
 class KOBOLDADVENTURES_API AKAMushroom : public AKAEnemy
 {
 	GENERATED_BODY()
+
+#pragma region Combat
+	
+public:
+	UFUNCTION(BlueprintCallable, Category="KA|Combat")
+	void SetDidHit(const bool bValue) const;
+
+#pragma endregion 
 };

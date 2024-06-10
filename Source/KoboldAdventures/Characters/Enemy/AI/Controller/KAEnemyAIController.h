@@ -28,6 +28,8 @@ class KOBOLDADVENTURES_API AKAEnemyAIController : public AAIController
 public:
 	AKAEnemyAIController();
 
+	virtual void Tick(float DeltaSeconds) override;
+
 protected:
 	virtual void OnPossess(APawn* InPawn) override;
 
@@ -36,14 +38,32 @@ protected:
 public:
 	UFUNCTION()
 	void OnAttackEndReceived();
+
 	void SetDefaultAttackBTComponent(UBehaviorTreeComponent* NewBTComponent);
 	void SetDefaultAttackBTNode(UBTNode* NewBTNode);
+
+	UFUNCTION()
+	void OnStunEndReceived();
+
+	void SetStunBTComponent(UBehaviorTreeComponent* NewBTComponent);
+	void SetStunBTNode(UBTNode* NewBTNode);
+
+	void SetDidHit(const bool bValue);
+	bool GetDidHit() const;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBehaviorTreeComponent> DefaultAttackBTComponent;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBTNode> DefaultAttackBTNode;
+
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
+	TObjectPtr<UBehaviorTreeComponent> StunBTComponent;
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
+	TObjectPtr<UBTNode> StunBTNode;
+
+	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
+	bool bDidHit{false};
 
 #pragma endregion
 
@@ -54,10 +74,10 @@ public:
 	bool GetHasFocus() const;
 
 private:
-	UFUNCTION(BlueprintCallable, Category="KA")
+	UFUNCTION(BlueprintCallable, Category="KA|Focus")
 	void SetFocusDirection(AActor* AttackTarget, AKAEnemy* Enemy);
 
-	UPROPERTY(VisibleAnywhere, Category="KA")
+	UPROPERTY(VisibleAnywhere, Category="KA|Focus")
 	bool bHasFocus{false};
 
 #pragma endregion

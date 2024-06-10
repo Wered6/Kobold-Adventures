@@ -56,6 +56,30 @@ void AKAEnemy::SetAttackHitBoxCollision(const bool bSetActive)
 	AttackHitBox->SetCollisionEnabled(CollisionState);
 }
 
+void AKAEnemy::Stun()
+{
+#pragma region NullChecks
+	if (!StunAnimSequence)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::Stun|StunAnimSequence is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	bIsAttacking = true;
+
+	// On end of animation call on stun end
+	FZDOnAnimationOverrideEndSignature EndAnimDelegate;
+	EndAnimDelegate.BindLambda([this](bool bResult)
+	{
+		// You can use bResult to differentiate between OnCompleted and OnCancelled
+		OnStunEnd.Broadcast();
+		bIsAttacking = false;
+	});
+
+	GetAnimInstance()->PlayAnimationOverride(StunAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
+}
+
 void AKAEnemy::HandleDeath() const
 {
 	Super::HandleDeath();

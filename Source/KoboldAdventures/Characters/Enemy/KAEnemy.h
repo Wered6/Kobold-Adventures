@@ -21,6 +21,8 @@ enum class EKAAIState : uint8
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackEnd);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnStunEnd);
+
 UCLASS()
 class KOBOLDADVENTURES_API AKAEnemy : public AKABaseChar, public IKAEnemyAIInterface
 {
@@ -37,6 +39,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void SetAttackHitBoxCollision(const bool bSetActive);
 
+	UFUNCTION(BlueprintCallable, Category="KA|Combat")
+	void Stun();
+
+	FOnStunEnd OnStunEnd;
+
 	FOnAttackEnd OnAttackEnd;
 
 private:
@@ -44,6 +51,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> AttackAnimSequence;
+
+	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
+	TObjectPtr<UPaperZDAnimSequence> StunAnimSequence;
 
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBoxComponent> AttackHitBox;

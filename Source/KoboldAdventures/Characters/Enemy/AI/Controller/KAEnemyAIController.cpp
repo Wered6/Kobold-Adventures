@@ -41,6 +41,13 @@ AKAEnemyAIController::AKAEnemyAIController()
 	AIPerception->OnPerceptionUpdated.AddDynamic(this, &AKAEnemyAIController::OnPerceptionUpdated);
 }
 
+void AKAEnemyAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	UE_LOG(LogTemp, Warning, TEXT("%s"), GetDidHit() ? TEXT("Hit") : TEXT("Not Hit"))
+}
+
 void AKAEnemyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -56,6 +63,7 @@ void AKAEnemyAIController::OnPossess(APawn* InPawn)
 #pragma endregion
 
 	Enemy->OnAttackEnd.AddDynamic(this, &AKAEnemyAIController::OnAttackEndReceived);
+	Enemy->OnStunEnd.AddDynamic(this, &AKAEnemyAIController::OnStunEndReceived);
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
@@ -102,6 +110,61 @@ void AKAEnemyAIController::SetDefaultAttackBTNode(UBTNode* NewBTNode)
 #pragma endregion
 
 	DefaultAttackBTNode = NewBTNode;
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
+void AKAEnemyAIController::OnStunEndReceived()
+{
+#pragma region NullChecks
+	if (!StunBTComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnStunEndReceived|StunBTComponent is nullptr"))
+		return;
+	}
+	if (!StunBTNode)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnStunEndReceived|StunBTNode is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	StunBTComponent->OnTaskFinished(static_cast<const UBTTaskNode*>(StunBTNode), EBTNodeResult::Succeeded);
+}
+
+void AKAEnemyAIController::SetStunBTComponent(UBehaviorTreeComponent* NewBTComponent)
+{
+#pragma region NullChecks
+	if (!NewBTComponent)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetStunBTComponent|NewBTComponent is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	StunBTComponent = NewBTComponent;
+}
+
+void AKAEnemyAIController::SetStunBTNode(UBTNode* NewBTNode)
+{
+#pragma region NullChecks
+	if (!NewBTNode)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetStunBTNode|NewBTNode is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	StunBTNode = NewBTNode;
+}
+
+void AKAEnemyAIController::SetDidHit(const bool bValue)
+{
+	bDidHit = bValue;
+}
+
+bool AKAEnemyAIController::GetDidHit() const
+{
+	return bDidHit;
 }
 
 void AKAEnemyAIController::SetHasFocus(const bool bValue)
