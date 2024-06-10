@@ -255,6 +255,7 @@ void AKAKobold::OnAttack()
 			break;
 		}
 	}
+	// todo when we attack during receiveing damage we cant move or attack to the end
 }
 
 void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence)
