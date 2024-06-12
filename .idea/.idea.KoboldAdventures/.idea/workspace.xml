@@ -12,18 +12,9 @@
   <component name="ChangeListManager">
     <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/AI/BT_Enemy_Base.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/AI/BT_Enemy_Base.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/Mushroom/AnimSequences/Mushroom_Attack_WithStun.uasset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/Mushroom/BP_Mushroom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/Mushroom/BP_Mushroom.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Decorators/KABTDecorator_HasFocus.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Decorators/KABTDecorator_HasFocus.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/Mushroom/KAMushroom.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/Mushroom/KAMushroom.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/Mushroom/KAMushroom.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/Mushroom/KAMushroom.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Kobold/BP_Kobold.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Kobold/BP_Kobold.uasset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_SetStateAsPassive.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_SetStateAsPassive.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +68,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;CodeLensConfigurable&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -527,7 +518,12 @@
       <workItem from="1717179069819" duration="1771000" />
       <workItem from="1717221658748" duration="1473000" />
       <workItem from="1717237491660" duration="1957000" />
-      <workItem from="1717674367220" duration="33548000" />
+      <workItem from="1717674367220" duration="33953000" />
+      <workItem from="1718094532032" duration="618000" />
+      <workItem from="1718095211178" duration="1389000" />
+      <workItem from="1718097572027" duration="1186000" />
+      <workItem from="1718101413524" duration="2510000" />
+      <workItem from="1718181931473" duration="2472000" />
     </task>
     <servers />
   </component>

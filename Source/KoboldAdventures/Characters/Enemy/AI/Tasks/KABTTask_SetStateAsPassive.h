@@ -13,5 +13,4 @@ class KOBOLDADVENTURES_API UKABTTask_SetStateAsPassive : public UBTTask_Blackboa
 
 public:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-	
 };

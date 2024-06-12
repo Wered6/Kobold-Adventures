@@ -255,7 +255,6 @@ void AKAKobold::OnAttack()
 			break;
 		}
 	}
-	// todo when we attack during receiveing damage we cant move or attack to the end
 }
 
 void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence)
@@ -288,10 +287,7 @@ void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequen
 	EndAnimDelegate.BindLambda([this](bool bResult)
 	{
 		// You can use bResult to differentiate between OnCompleted and OnCancelled
-		if (bResult)
-		{
-			bIsAttacking = false;
-		}
+		bIsAttacking = false;
 	});
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1.f, 0.f, EndAnimDelegate);
 
