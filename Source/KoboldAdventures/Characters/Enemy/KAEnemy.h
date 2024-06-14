@@ -42,6 +42,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void Stun();
 
+	virtual void ReceiveDamage(const float Damage) override;
+
 	FOnStunEnd OnStunEnd;
 
 	FOnAttackEnd OnAttackEnd;

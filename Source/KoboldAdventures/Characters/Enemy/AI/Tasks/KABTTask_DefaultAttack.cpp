@@ -19,7 +19,7 @@ EBTNodeResult::Type UKABTTask_DefaultAttack::ExecuteTask(UBehaviorTreeComponent&
 #pragma endregion
 
 	KAEnemyAIC->SetDefaultAttackBTComponent(&OwnerComp);
-	KAEnemyAIC->SetDefaultAttackBTNode(this);
+	KAEnemyAIC->SetDefaultAttackBTTaskNode(this);
 
 	AKAEnemy* Enemy{Cast<AKAEnemy>(KAEnemyAIC->GetPawn())};
 

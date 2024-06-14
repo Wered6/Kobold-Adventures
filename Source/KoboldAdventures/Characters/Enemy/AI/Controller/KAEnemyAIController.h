@@ -6,10 +6,11 @@
 #include "AIController.h"
 #include "KAEnemyAIController.generated.h"
 
+class UBTTaskNode;
+class AKAPatrolRoute;
 class UAISenseConfig_Sight;
 struct FAIStimulus;
 enum class EKAAIState : uint8;
-class UBTNode;
 class UBehaviorTreeComponent;
 class AKAEnemy;
 
@@ -28,8 +29,6 @@ class KOBOLDADVENTURES_API AKAEnemyAIController : public AAIController
 public:
 	AKAEnemyAIController();
 
-	virtual void Tick(float DeltaSeconds) override;
-
 protected:
 	virtual void OnPossess(APawn* InPawn) override;
 
@@ -40,13 +39,13 @@ public:
 	void OnAttackEndReceived();
 
 	void SetDefaultAttackBTComponent(UBehaviorTreeComponent* NewBTComponent);
-	void SetDefaultAttackBTNode(UBTNode* NewBTNode);
+	void SetDefaultAttackBTTaskNode(UBTTaskNode* NewBTNode);
 
 	UFUNCTION()
 	void OnStunEndReceived();
 
 	void SetStunBTComponent(UBehaviorTreeComponent* NewBTComponent);
-	void SetStunBTNode(UBTNode* NewBTNode);
+	void SetStunBTTaskNode(UBTTaskNode* NewBTNode);
 
 	void SetDidHit(const bool bValue);
 	bool GetDidHit() const;
@@ -55,12 +54,12 @@ private:
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBehaviorTreeComponent> DefaultAttackBTComponent;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
-	TObjectPtr<UBTNode> DefaultAttackBTNode;
+	TObjectPtr<UBTTaskNode> DefaultAttackBTTaskNode;
 
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBehaviorTreeComponent> StunBTComponent;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
-	TObjectPtr<UBTNode> StunBTNode;
+	TObjectPtr<UBTTaskNode> StunBTTaskNode;
 
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	bool bDidHit{false};
@@ -111,6 +110,31 @@ private:
 	TObjectPtr<UAIPerceptionComponent> AIPerception;
 	UPROPERTY(VisibleAnywhere, Category="KA|Perception")
 	TObjectPtr<UAISenseConfig_Sight> SightConfig;
+
+#pragma endregion
+
+#pragma region Patrol
+
+public:
+	void MoveAlongPatrolRoute();
+
+	// overrides OnMoveCompleted which is getting called when some move request is completed (ex. MoveTo)
+	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
+
+	void SetMoveAlongPatrolRouteBTComponent(UBehaviorTreeComponent* NewBTComponent);
+	void SetMoveAlongPatrolRouteBTTaskNode(UBTTaskNode* NewBTTaskNode);
+
+private:
+	UPROPERTY(VisibleAnywhere, Category="KA|Patrol")
+	TObjectPtr<AKAPatrolRoute> PatrolRoute;
+
+	UPROPERTY(VisibleAnywhere, Category="KA|Patrol")
+	TObjectPtr<UBehaviorTreeComponent> MoveAlongPatrolRouteBTComponent;
+	UPROPERTY(VisibleAnywhere, Category="KA|Patrol")
+	TObjectPtr<UBTTaskNode> MoveAlongPatrolRouteBTTaskNode;
+
+	UPROPERTY(VisibleAnywhere, Category="KA|Patrol")
+	FAIRequestID CurrentMoveAlongPatrolRouteRequestID;
 
 #pragma endregion
 };

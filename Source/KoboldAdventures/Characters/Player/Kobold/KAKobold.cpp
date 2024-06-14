@@ -112,12 +112,20 @@ void AKAKobold::SetupInputMappingContext() const
 
 void AKAKobold::OnMove(const FInputActionValue& Value)
 {
-	if (!bIsAttacking)
+	switch (CurrentState)
 	{
-		const float ValueX{Value.Get<float>()};
+	case EKAPlayerState::Passive:
+		{
+			const float ValueX{Value.Get<float>()};
 
-		AddMovementInput(FVector(1.f, 0.f, 0.f), ValueX);
-		UpdateControllerRotation(ValueX);
+			AddMovementInput(FVector(1.f, 0.f, 0.f), ValueX);
+			UpdateControllerRotation(ValueX);
+			break;
+		}
+	case EKAPlayerState::Attacking:
+	case EKAPlayerState::Stunned:
+	case EKAPlayerState::Dead:
+		break;
 	}
 }
 
@@ -147,9 +155,17 @@ void AKAKobold::UpdateControllerRotation(const float DirectionX) const
 
 void AKAKobold::OnStartJump()
 {
-	if (!bIsAttacking)
+	switch (CurrentState)
 	{
-		Jump();
+	case EKAPlayerState::Passive:
+		{
+			Jump();
+			break;
+		}
+	case EKAPlayerState::Attacking:
+	case EKAPlayerState::Stunned:
+	case EKAPlayerState::Dead:
+		break;
 	}
 }
 
@@ -196,6 +212,23 @@ void AKAKobold::SetAttackHitBoxCollision(const EAttackType AttackType, const boo
 	}
 }
 
+void AKAKobold::ReceiveDamage(const float Damage)
+{
+	CurrentState = EKAPlayerState::Stunned;
+
+	// On end of animation set CurrentState to passive
+	FZDOnAnimationOverrideEndSignature EndAnimDelegate;
+	EndAnimDelegate.BindLambda([this](bool bResult)
+	{
+		// You can use bResult to differentiate between OnCompleted and OnCancelled
+		CurrentState = EKAPlayerState::Passive;
+	});
+
+	GetAnimInstance()->PlayAnimationOverride(HitAnimSequence, TEXT("DefaultSlot"), 1.f, 0.f, EndAnimDelegate);
+
+	Super::ReceiveDamage(Damage);
+}
+
 void AKAKobold::OnAttack()
 {
 #pragma region NullChecks
@@ -223,7 +256,7 @@ void AKAKobold::OnAttack()
 	}
 
 	// If we're attacking and no attack is queued we can queue next attack
-	if (bIsAttacking && !bIsAttackQueued)
+	if (CurrentState == EKAPlayerState::Attacking && !bIsAttackQueued)
 	{
 		bIsAttackQueued = true;
 
@@ -231,8 +264,8 @@ void AKAKobold::OnAttack()
 		GetAnimInstance()->GetPlayer()->OnPlaybackSequenceComplete.AddDynamic(
 			this, &AKAKobold::OnPlaybackSequenceCompleted);
 	}
-	// If we're not attacking we have NextComboAttackWindowTime to do next attack combo
-	else if (!bIsAttacking)
+	// If we're passive we have NextComboAttackWindowTime to do next attack combo
+	else if (CurrentState == EKAPlayerState::Passive)
 	{
 		// Clear timer, so it won't reset current attack
 		FTimerManager& TimerManager{GetWorld()->GetTimerManager()};
@@ -267,7 +300,7 @@ void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequen
 	}
 #pragma endregion
 
-	bIsAttacking = true;
+	CurrentState = EKAPlayerState::Attacking;
 
 	switch (CurrentAttack)
 	{
@@ -282,12 +315,21 @@ void AKAKobold::PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequen
 		break;
 	}
 
-	// On end of animation set bIsAttacking flag to false
+	// On end of animation set CurrentState to passive
 	FZDOnAnimationOverrideEndSignature EndAnimDelegate;
 	EndAnimDelegate.BindLambda([this](bool bResult)
 	{
 		// You can use bResult to differentiate between OnCompleted and OnCancelled
-		bIsAttacking = false;
+		if (bResult)
+		{
+			// If attack animation is completed we switch back to passive
+			CurrentState = EKAPlayerState::Passive;
+		}
+		else
+		{
+			// If attack animation in cancelled its probably because of getting hit and hit animation override this
+			CurrentState = EKAPlayerState::Stunned;
+		}
 	});
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1.f, 0.f, EndAnimDelegate);
 

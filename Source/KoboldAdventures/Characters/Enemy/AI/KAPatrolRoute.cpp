@@ -36,7 +36,7 @@ void AKAPatrolRoute::IncrementPatrolRoute()
 		return;
 	}
 #pragma endregion
-	
+
 	PatrolIndex += Direction;
 	const int32 LastPatrolIndex{PatrolRoute->GetNumberOfSplinePoints() - 1};
 

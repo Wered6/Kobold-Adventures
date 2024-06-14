@@ -80,6 +80,13 @@ void AKAEnemy::Stun()
 	GetAnimInstance()->PlayAnimationOverride(StunAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
 }
 
+void AKAEnemy::ReceiveDamage(const float Damage)
+{	
+	GetAnimInstance()->PlayAnimationOverride(HitAnimSequence);
+	
+	Super::ReceiveDamage(Damage);
+}
+
 void AKAEnemy::HandleDeath() const
 {
 	Super::HandleDeath();

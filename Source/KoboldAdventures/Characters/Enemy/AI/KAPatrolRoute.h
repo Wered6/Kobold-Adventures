@@ -27,7 +27,7 @@ private:
 	TObjectPtr<USplineComponent> PatrolRoute;
 
 	UPROPERTY(VisibleAnywhere, Category="KA")
-	uint8 PatrolIndex;
+	uint8 PatrolIndex{0};
 	UPROPERTY(VisibleAnywhere, Category="KA")
 	int8 Direction{1};
 };

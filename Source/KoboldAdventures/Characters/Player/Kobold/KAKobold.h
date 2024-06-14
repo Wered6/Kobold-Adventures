@@ -20,6 +20,16 @@ enum class EAttackType : uint8
 	ATTACK3 UMETA(DisplayName="Attack3")
 };
 
+
+UENUM(BlueprintType)
+enum class EKAPlayerState : uint8
+{
+	Passive,
+	Attacking,
+	Stunned,
+	Dead
+};
+
 UCLASS()
 class KOBOLDADVENTURES_API AKAKobold : public AKABaseChar
 {
@@ -76,6 +86,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void SetAttackHitBoxCollision(const EAttackType AttackType, const bool bSetActive) const;
 
+	virtual void ReceiveDamage(const float Damage) override;
+	
 private:
 	void OnAttack();
 	void PlayAttackAnimation(const UPaperZDAnimSequence* AttackAnimSequence);
@@ -97,7 +109,7 @@ private:
 	TObjectPtr<UBoxComponent> Attack2HitBox;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	TObjectPtr<UBoxComponent> Attack3HitBox;
-	
+
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	bool bIsAttackQueued{false};
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
@@ -106,5 +118,14 @@ private:
 	FTimerHandle AttackComboTimerHandle;
 	UPROPERTY(VisibleAnywhere, Category="KA|Combat")
 	float NextComboAttackWindowTime{1.f};
+
+#pragma endregion
+
+#pragma region State
+
+private:
+	UPROPERTY(VisibleAnywhere, Category="KA|State")
+	EKAPlayerState CurrentState{EKAPlayerState::Passive};
+
 #pragma endregion
 };

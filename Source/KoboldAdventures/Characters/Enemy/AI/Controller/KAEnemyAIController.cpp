@@ -6,6 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "KoboldAdventures/Characters/Enemy/KAEnemy.h"
+#include "KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.h"
+#include "Navigation/PathFollowingComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
@@ -41,13 +43,6 @@ AKAEnemyAIController::AKAEnemyAIController()
 	AIPerception->OnPerceptionUpdated.AddDynamic(this, &AKAEnemyAIController::OnPerceptionUpdated);
 }
 
-void AKAEnemyAIController::Tick(float DeltaSeconds)
-{
-	Super::Tick(DeltaSeconds);
-
-	UE_LOG(LogTemp, Warning, TEXT("%s"), GetDidHit() ? TEXT("Hit") : TEXT("Not Hit"))
-}
-
 void AKAEnemyAIController::OnPossess(APawn* InPawn)
 {
 	Super::OnPossess(InPawn);
@@ -75,15 +70,14 @@ void AKAEnemyAIController::OnAttackEndReceived()
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnAttackEndReceived|BTComponent is nullptr"))
 		return;
 	}
-	if (!DefaultAttackBTNode)
+	if (!DefaultAttackBTTaskNode)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnAttackEndReceived|BTNode is nullptr"))
 		return;
 	}
 #pragma endregion
 
-	DefaultAttackBTComponent->OnTaskFinished(static_cast<const UBTTaskNode*>(DefaultAttackBTNode),
-	                                         EBTNodeResult::Succeeded);
+	DefaultAttackBTComponent->OnTaskFinished(DefaultAttackBTTaskNode, EBTNodeResult::Succeeded);
 }
 
 void AKAEnemyAIController::SetDefaultAttackBTComponent(UBehaviorTreeComponent* NewBTComponent)
@@ -99,7 +93,7 @@ void AKAEnemyAIController::SetDefaultAttackBTComponent(UBehaviorTreeComponent* N
 	DefaultAttackBTComponent = NewBTComponent;
 }
 
-void AKAEnemyAIController::SetDefaultAttackBTNode(UBTNode* NewBTNode)
+void AKAEnemyAIController::SetDefaultAttackBTTaskNode(UBTTaskNode* NewBTNode)
 {
 #pragma region NullChecks
 	if (!NewBTNode)
@@ -109,7 +103,7 @@ void AKAEnemyAIController::SetDefaultAttackBTNode(UBTNode* NewBTNode)
 	}
 #pragma endregion
 
-	DefaultAttackBTNode = NewBTNode;
+	DefaultAttackBTTaskNode = NewBTNode;
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
@@ -121,14 +115,14 @@ void AKAEnemyAIController::OnStunEndReceived()
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnStunEndReceived|StunBTComponent is nullptr"))
 		return;
 	}
-	if (!StunBTNode)
+	if (!StunBTTaskNode)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnStunEndReceived|StunBTNode is nullptr"))
 		return;
 	}
 #pragma endregion
 
-	StunBTComponent->OnTaskFinished(static_cast<const UBTTaskNode*>(StunBTNode), EBTNodeResult::Succeeded);
+	StunBTComponent->OnTaskFinished(StunBTTaskNode, EBTNodeResult::Succeeded);
 }
 
 void AKAEnemyAIController::SetStunBTComponent(UBehaviorTreeComponent* NewBTComponent)
@@ -144,7 +138,7 @@ void AKAEnemyAIController::SetStunBTComponent(UBehaviorTreeComponent* NewBTCompo
 	StunBTComponent = NewBTComponent;
 }
 
-void AKAEnemyAIController::SetStunBTNode(UBTNode* NewBTNode)
+void AKAEnemyAIController::SetStunBTTaskNode(UBTTaskNode* NewBTNode)
 {
 #pragma region NullChecks
 	if (!NewBTNode)
@@ -154,7 +148,7 @@ void AKAEnemyAIController::SetStunBTNode(UBTNode* NewBTNode)
 	}
 #pragma endregion
 
-	StunBTNode = NewBTNode;
+	StunBTTaskNode = NewBTNode;
 }
 
 void AKAEnemyAIController::SetDidHit(const bool bValue)
@@ -291,4 +285,98 @@ void AKAEnemyAIController::OnPerceptionUpdated(const TArray<AActor*>& UpdatedAct
 			HandleSensedSight(Actor);
 		}
 	}
+}
+
+void AKAEnemyAIController::MoveAlongPatrolRoute()
+{
+	APawn* AIPawn{GetPawn()};
+
+#pragma region NullChecks
+	if (!AIPawn)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::MoveAlongPatrolRoute|AIPawn is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	const bool bImplementsInterface{AIPawn->Implements<UKAEnemyAIInterface>()};
+	if (bImplementsInterface)
+	{
+		PatrolRoute = IKAEnemyAIInterface::Execute_GetPatrolRoute(AIPawn);
+	}
+
+#pragma region NullChecks
+	if (!PatrolRoute)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::MoveAlongPatrolRoute|PatrolRoute is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	const FVector GoalLocation{PatrolRoute->GetSplinePointAsWorldPosition()};
+
+	FAIMoveRequest MoveRequest;
+	MoveRequest.SetGoalLocation(GoalLocation);
+	MoveRequest.SetAcceptanceRadius(10.f);
+
+	FNavPathSharedPtr NavPath;
+
+	// Save RequestID to check in OnMoveCompleted, so it works only for those move requests
+	const FPathFollowingRequestResult Result{MoveTo(MoveRequest, &NavPath)};
+	CurrentMoveAlongPatrolRouteRequestID = Result.MoveId;
+}
+
+void AKAEnemyAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)
+{
+#pragma region NullChecks
+	if (!PatrolRoute)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::OnMoveCompleted|PatrolRoute is nullptr"))
+		return;
+	}
+	if (!MoveAlongPatrolRouteBTComponent)
+	{
+		UE_LOG(LogTemp, Warning,
+		       TEXT("AKAEnemyAIController::OnMoveCompleted|MoveAlongPatrolRouteBTComponent is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	Super::OnMoveCompleted(RequestID, Result);
+
+	// Check if completed move is MoveAlongPatrolRoute request and if success
+	const bool bIsCurrentRequestID{RequestID == CurrentMoveAlongPatrolRouteRequestID};
+	const bool bIsSuccess{Result.Code == EPathFollowingResult::Success};
+	if (bIsCurrentRequestID && bIsSuccess)
+	{
+		PatrolRoute->IncrementPatrolRoute();
+		MoveAlongPatrolRouteBTComponent->OnTaskFinished(MoveAlongPatrolRouteBTTaskNode, EBTNodeResult::Succeeded);
+	}
+}
+
+void AKAEnemyAIController::SetMoveAlongPatrolRouteBTComponent(UBehaviorTreeComponent* NewBTComponent)
+{
+#pragma region NullChecks
+	if (!NewBTComponent)
+	{
+		UE_LOG(LogTemp, Warning,
+		       TEXT("AKAEnemyAIController::SetMoveAlongPatrolRouteBTComponent|NewBTComponent is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	MoveAlongPatrolRouteBTComponent = NewBTComponent;
+}
+
+void AKAEnemyAIController::SetMoveAlongPatrolRouteBTTaskNode(UBTTaskNode* NewBTTaskNode)
+{
+#pragma region NullChecks
+	if (!NewBTTaskNode)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetMoveAlongPatrolRouteBTNode|NewBTNode is nullptr"))
+		return;
+	}
+#pragma endregion
+
+	MoveAlongPatrolRouteBTTaskNode = NewBTTaskNode;
 }

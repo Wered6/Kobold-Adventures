@@ -32,8 +32,6 @@ void AKABaseChar::ReceiveDamage(const float Damage)
 
 	CurrentHealth -= Damage;
 
-	GetAnimInstance()->PlayAnimationOverride(HitAnimSequence);
-
 	if (CurrentHealth <= 0)
 	{
 		HandleDeath();
