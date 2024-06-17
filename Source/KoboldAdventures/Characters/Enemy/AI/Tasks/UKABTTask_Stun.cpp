@@ -19,8 +19,8 @@ EBTNodeResult::Type UUKABTTask_Stun::ExecuteTask(UBehaviorTreeComponent& OwnerCo
 
 	KAEnemyAIC->SetStunBTComponent(&OwnerComp);
 	KAEnemyAIC->SetStunBTTaskNode(this);
-	
-	AKAMushroom* Mushroom{Cast<AKAMushroom>(KAEnemyAIC->GetPawn())};
+
+	const AKAMushroom* Mushroom{Cast<AKAMushroom>(KAEnemyAIC->GetPawn())};
 
 #pragma region NullChecks
 	if (!Mushroom)

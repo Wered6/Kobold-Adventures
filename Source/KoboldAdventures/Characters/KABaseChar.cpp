@@ -38,11 +38,6 @@ void AKABaseChar::ReceiveDamage(const float Damage)
 	}
 }
 
-bool AKABaseChar::GetIsAttacking() const
-{
-	return bIsAttacking;
-}
-
 void AKABaseChar::HandleDeath() const
 {
 	GetAnimInstance()->JumpToNode(TEXT("JumpDeath"));

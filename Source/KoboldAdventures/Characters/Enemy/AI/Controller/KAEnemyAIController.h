@@ -21,6 +21,16 @@ enum class EKAAISense : uint8
 	Sight
 };
 
+UENUM(BlueprintType)
+enum class EKAAIState : uint8
+{
+	Passive,
+	Attacking,
+	Chasing,
+	Stunned,
+	Dead
+};
+
 UCLASS()
 class KOBOLDADVENTURES_API AKAEnemyAIController : public AAIController
 {
@@ -66,35 +76,27 @@ private:
 
 #pragma endregion
 
-#pragma region Focus
-
-public:
-	void SetHasFocus(const bool bValue);
-	bool GetHasFocus() const;
-
-private:
-	UFUNCTION(BlueprintCallable, Category="KA|Focus")
-	void SetFocusDirection(AActor* AttackTarget, AKAEnemy* Enemy);
-
-	UPROPERTY(VisibleAnywhere, Category="KA|Focus")
-	bool bHasFocus{false};
-
-#pragma endregion
-
 #pragma region State
 
 public:
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
+	UFUNCTION(BlueprintNativeEvent, Category="KA|State")
 	void SetStateAsPassive();
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
-	void SetStateAsAttacking(AActor* AttackTarget);
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
+	UFUNCTION(BlueprintNativeEvent, Category="KA|State")
+	void SetStateAsAttacking();
+	UFUNCTION(BlueprintNativeEvent, Category="KA|State")
+	void SetStateAsChasing();
+	UFUNCTION(BlueprintNativeEvent, Category="KA|State")
 	void SetStateAsStunned();
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
+	UFUNCTION(BlueprintNativeEvent, Category="KA|State")
 	void SetStateAsDead();
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category="KA|State")
-	UPARAM(DisplayName="State")
-	EKAAIState GetCurrentState();
+	
+	EKAAIState GetCurrentState() const;
+
+private:
+	UPROPERTY(VisibleAnywhere, Category="KA|State")
+	EKAAIState CurrentState;
+	UPROPERTY(VisibleAnywhere, Category="KA|State")
+	EKAAIState OverrideState;
 
 #pragma endregion
 
@@ -102,7 +104,7 @@ public:
 
 private:
 	bool CanSenseActor(AActor* Actor, EKAAISense Sense, FAIStimulus& StimulusOUT) const;
-	void HandleSensedSight(AActor* Actor);
+	void HandleSensedSight(const AActor* Actor);
 	UFUNCTION()
 	void OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 

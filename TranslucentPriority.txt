@@ -1,0 +1,2 @@
+MAP 0
+creatures 4

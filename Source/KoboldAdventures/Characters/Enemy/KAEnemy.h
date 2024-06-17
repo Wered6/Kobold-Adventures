@@ -7,17 +7,9 @@
 #include "KoboldAdventures/Characters/KABaseChar.h"
 #include "KAEnemy.generated.h"
 
+class AKAEnemyAIController;
 class UBoxComponent;
 class AKAPatrolRoute;
-
-UENUM(BlueprintType)
-enum class EKAAIState : uint8
-{
-	Passive,
-	Attacking,
-	Stunned,
-	Dead
-};
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAttackEnd);
 
@@ -31,16 +23,19 @@ class KOBOLDADVENTURES_API AKAEnemy : public AKABaseChar, public IKAEnemyAIInter
 public:
 	AKAEnemy();
 
+protected:
+	virtual void BeginPlay() override;
+
 #pragma region Combat
 
 public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
-	void Attack();
+	void Attack() const;
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	void SetAttackHitBoxCollision(const bool bSetActive);
 
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
-	void Stun();
+	void Stun() const;
 
 	virtual void ReceiveDamage(const float Damage) override;
 
@@ -80,4 +75,8 @@ private:
 	virtual AKAPatrolRoute* GetPatrolRoute_Implementation() override;
 
 #pragma endregion
+
+protected:
+	UPROPERTY()
+	TObjectPtr<AKAEnemyAIController> KAEnemyAIC;
 };

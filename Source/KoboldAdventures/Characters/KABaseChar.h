@@ -25,14 +25,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category="KA|Combat")
 	virtual void ReceiveDamage(const float Damage);
 
-	bool GetIsAttacking() const;
-
 protected:
 	virtual void HandleDeath() const;
-
-	UPROPERTY(BlueprintReadOnly, Category="KA|Combat")
-	bool bIsAttacking{false};
-	// todo change it to enum
 
 	UPROPERTY(EditDefaultsOnly, Category="KA|Combat")
 	TObjectPtr<UPaperZDAnimSequence> HitAnimSequence;

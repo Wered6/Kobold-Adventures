@@ -15,9 +15,21 @@ AKAEnemy::AKAEnemy()
 	// todo rethink structure of player and enemy classes cpp or blueprints?
 }
 
-void AKAEnemy::Attack()
+void AKAEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+
+	KAEnemyAIC = Cast<AKAEnemyAIController>(GetController());
+}
+
+void AKAEnemy::Attack() const
 {
 #pragma region NullChecks
+	if (!KAEnemyAIC)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::Attack|KAEnemyAIC is nullptr"))
+		return;
+	}
 	if (!AttackAnimSequence)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::Attack|AttackAnimSequence is nullptr"))
@@ -25,7 +37,7 @@ void AKAEnemy::Attack()
 	}
 #pragma endregion
 
-	bIsAttacking = true;
+	KAEnemyAIC->SetStateAsAttacking();
 
 	// On end of animation call on attack end
 	FZDOnAnimationOverrideEndSignature EndAnimDelegate;
@@ -33,7 +45,7 @@ void AKAEnemy::Attack()
 	{
 		// You can use bResult to differentiate between OnCompleted and OnCancelled
 		OnAttackEnd.Broadcast();
-		bIsAttacking = false;
+		KAEnemyAIC->SetStateAsChasing();
 	});
 
 	GetAnimInstance()->PlayAnimationOverride(AttackAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
@@ -56,9 +68,14 @@ void AKAEnemy::SetAttackHitBoxCollision(const bool bSetActive)
 	AttackHitBox->SetCollisionEnabled(CollisionState);
 }
 
-void AKAEnemy::Stun()
+void AKAEnemy::Stun() const
 {
 #pragma region NullChecks
+	if (!KAEnemyAIC)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::Stun|KAEnemyAIC is nullptr"))
+		return;
+	}
 	if (!StunAnimSequence)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("AKAEnemy::Stun|StunAnimSequence is nullptr"))
@@ -66,7 +83,7 @@ void AKAEnemy::Stun()
 	}
 #pragma endregion
 
-	bIsAttacking = true;
+	KAEnemyAIC->SetStateAsStunned();
 
 	// On end of animation call on stun end
 	FZDOnAnimationOverrideEndSignature EndAnimDelegate;
@@ -74,25 +91,21 @@ void AKAEnemy::Stun()
 	{
 		// You can use bResult to differentiate between OnCompleted and OnCancelled
 		OnStunEnd.Broadcast();
-		bIsAttacking = false;
+		KAEnemyAIC->SetStateAsChasing();
 	});
 
 	GetAnimInstance()->PlayAnimationOverride(StunAnimSequence, TEXT("DefaultSlot"), 1, 0, EndAnimDelegate);
 }
 
 void AKAEnemy::ReceiveDamage(const float Damage)
-{	
+{
 	GetAnimInstance()->PlayAnimationOverride(HitAnimSequence);
-	
+
 	Super::ReceiveDamage(Damage);
 }
 
 void AKAEnemy::HandleDeath() const
 {
-	Super::HandleDeath();
-
-	AKAEnemyAIController* KAEnemyAIC{Cast<AKAEnemyAIController>(GetController())};
-
 #pragma region NullChecks
 	if (!KAEnemyAIC)
 	{
@@ -101,8 +114,9 @@ void AKAEnemy::HandleDeath() const
 	}
 #pragma endregion
 
+	Super::HandleDeath();
+
 	KAEnemyAIC->SetStateAsDead();
-	KAEnemyAIC->SetHasFocus(false);
 }
 
 AKAPatrolRoute* AKAEnemy::GetPatrolRoute_Implementation()

@@ -4,7 +4,6 @@
 #include "KAEnemyAIController.h"
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 #include "KoboldAdventures/Characters/Enemy/KAEnemy.h"
 #include "KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.h"
 #include "Navigation/PathFollowingComponent.h"
@@ -59,6 +58,8 @@ void AKAEnemyAIController::OnPossess(APawn* InPawn)
 
 	Enemy->OnAttackEnd.AddDynamic(this, &AKAEnemyAIController::OnAttackEndReceived);
 	Enemy->OnStunEnd.AddDynamic(this, &AKAEnemyAIController::OnStunEndReceived);
+
+	SetStateAsPassive_Implementation();
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst
@@ -154,6 +155,7 @@ void AKAEnemyAIController::SetStunBTTaskNode(UBTTaskNode* NewBTNode)
 void AKAEnemyAIController::SetDidHit(const bool bValue)
 {
 	bDidHit = bValue;
+	// todo stun and didhit doesnt work, because after attack ends state is back to chasing and branch is aborting itself and goes back to the top
 }
 
 bool AKAEnemyAIController::GetDidHit() const
@@ -161,50 +163,37 @@ bool AKAEnemyAIController::GetDidHit() const
 	return bDidHit;
 }
 
-void AKAEnemyAIController::SetHasFocus(const bool bValue)
+void AKAEnemyAIController::SetStateAsPassive_Implementation()
 {
-	bHasFocus = bValue;
-	ClearFocus(EAIFocusPriority::Gameplay);
+	CurrentState = EKAAIState::Passive;
+	OverrideState = EKAAIState::Passive;
 }
 
-bool AKAEnemyAIController::GetHasFocus() const
+void AKAEnemyAIController::SetStateAsAttacking_Implementation()
 {
-	return bHasFocus;
+	OverrideState = EKAAIState::Attacking;
 }
 
-void AKAEnemyAIController::SetFocusDirection(AActor* AttackTarget, AKAEnemy* Enemy)
+void AKAEnemyAIController::SetStateAsChasing_Implementation()
 {
-#pragma region NullChecks
-	if (!AttackTarget)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetFocusDirection|AttackTarget is nullptr"))
-		return;
-	}
-	if (!Enemy)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::SetFocusDirection|Enemy is nullptr"))
-		return;
-	}
-#pragma endregion
+	CurrentState = EKAAIState::Chasing;
+	OverrideState = EKAAIState::Chasing;
+}
 
-	const bool bIsAttacking{Enemy->GetIsAttacking()};
-	if (bIsAttacking)
-	{
-		return;
-	}
+void AKAEnemyAIController::SetStateAsStunned_Implementation()
+{
+	OverrideState = EKAAIState::Stunned;
+}
 
-	if (bHasFocus)
-	{
-		const FVector AttackTargetLocation{AttackTarget->GetActorLocation()};
-		const FVector EnemyLocation{Enemy->GetActorLocation()};
+void AKAEnemyAIController::SetStateAsDead_Implementation()
+{
+	CurrentState = EKAAIState::Dead;
+	OverrideState = EKAAIState::Dead;
+}
 
-		const FRotator LookAtRotation{UKismetMathLibrary::FindLookAtRotation(EnemyLocation, AttackTargetLocation)};
-		const FVector LookAtRotationVector{LookAtRotation.Vector()};
-
-		const FVector FocalPoint{EnemyLocation + FVector(LookAtRotationVector.X, 0.f, 0.f)};
-
-		SetFocalPoint(FocalPoint);
-	}
+EKAAIState AKAEnemyAIController::GetCurrentState() const
+{
+	return OverrideState;
 }
 
 bool AKAEnemyAIController::CanSenseActor(AActor* Actor, const EKAAISense Sense, FAIStimulus& StimulusOUT) const
@@ -242,7 +231,7 @@ bool AKAEnemyAIController::CanSenseActor(AActor* Actor, const EKAAISense Sense, 
 	return false;
 }
 
-void AKAEnemyAIController::HandleSensedSight(AActor* Actor)
+void AKAEnemyAIController::HandleSensedSight(const AActor* Actor)
 {
 #pragma region NullChecks
 	if (!Actor)
@@ -255,20 +244,27 @@ void AKAEnemyAIController::HandleSensedSight(AActor* Actor)
 	const EKAAIState State{GetCurrentState()};
 	const AActor* Player{UGameplayStatics::GetPlayerCharacter(GetWorld(), 0)};
 
+#pragma region NullChecks
+	if (!Player)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("AKAEnemyAIController::HandleSensedSight|Player is nullptr"))
+		return;
+	}
+#pragma endregion
+
 	switch (State)
 	{
 	case EKAAIState::Passive:
 		{
 			if (Player == Actor)
 			{
-				SetStateAsAttacking(Actor);
+				SetStateAsChasing();
 			}
 			break;
 		}
 	case EKAAIState::Attacking:
-		break;
+	case EKAAIState::Chasing:
 	case EKAAIState::Stunned:
-		break;
 	case EKAAIState::Dead:
 		break;
 	}

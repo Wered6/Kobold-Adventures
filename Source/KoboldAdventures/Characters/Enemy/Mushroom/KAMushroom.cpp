@@ -6,8 +6,6 @@
 
 void AKAMushroom::SetDidHit(const bool bValue) const
 {
-	AKAEnemyAIController* KAEnemyAIC{Cast<AKAEnemyAIController>(GetController())};
-
 #pragma region NullChecks
 	if (!KAEnemyAIC)
 	{

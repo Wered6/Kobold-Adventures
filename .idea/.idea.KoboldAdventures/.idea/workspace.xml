@@ -12,20 +12,6 @@
   <component name="ChangeListManager">
     <list default="true" id="58b206a9-a361-45a9-b54b-76a3be495976" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.KoboldAdventures/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/Mushroom/BP_Mushroom.uasset" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Blueprints/Characters/Enemy/Mushroom/BP_Mushroom.uasset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" beforeDir="false" afterPath="$PROJECT_DIR$/Content/Maps/MAP_Debug.umap" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Controller/KAEnemyAIController.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/KAPatrolRoute.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_MoveAlongPatrolRoute.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_MoveAlongPatrolRoute.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_MoveAlongPatrolRoute.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/AI/Tasks/KABTTask_MoveAlongPatrolRoute.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Enemy/KAEnemy.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/KABaseChar.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.h" beforeDir="false" afterPath="$PROJECT_DIR$/Source/KoboldAdventures/Characters/Player/Kobold/KAKobold.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,31 +164,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;C++ Project.KoboldAdventures.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;full.screen.before.presentation.mode&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "C++ Project.KoboldAdventures.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "full.screen.before.presentation.mode": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "advanced.settings",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\arkad\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\arkad\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\arkad\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\arkad\\AppData\\Roaming\\JetBrains\\Rider2024.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\arkad\\AppData\\Roaming\\JetBrains\\Rider2024.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\arkad\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="C++ Project.KoboldAdventures">
     <configuration name="KoboldAdventures" type="CppProject" factoryName="C++ Project">
       <configuration_1>
@@ -648,6 +634,8 @@
       <workItem from="1718097572027" duration="1186000" />
       <workItem from="1718101413524" duration="2510000" />
       <workItem from="1718181931473" duration="27737000" />
+      <workItem from="1718611553827" duration="1096000" />
+      <workItem from="1718613146719" duration="732000" />
     </task>
     <servers />
   </component>
@@ -656,6 +644,7 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
+    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
